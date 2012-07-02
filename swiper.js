@@ -5,7 +5,7 @@
     'numPages': 3,
     'initialPage': 0,
     'loop': false,
-    'generatePages': function(index) { this.html('Page ' + index); },
+    'generatePage': function(index) { this.html('Page ' + index); },
     'onbeforemovein': function() { },
     'onmovein': function() { },
     'onbeforemoveout': function() { },
@@ -71,7 +71,7 @@
               })
               .data('page-index', pageIndex)
               .appendTo($wrapper);
-            data.options.generatePages.call($newPage, pageIndex);
+            data.options.generatePage.call($newPage, pageIndex);
           }
         }
 
@@ -98,7 +98,7 @@
       });
 
     },
-    'swipe': function(direction, numPages) {
+    'swipe': function(direction) {
       return this.each(function() {
         var $swiper = $(this),
             width = $swiper.width(),
@@ -186,7 +186,7 @@
             pageIndex %= data.options.numPages;
           }
           $pages.eq(i).data('page-index', pageIndex);
-          data.options.generatePages.call($pages.eq(i), pageIndex);
+          data.options.generatePage.call($pages.eq(i), pageIndex);
         }
 
         data.currentPage = page;
@@ -198,7 +198,7 @@
       });
     },
     'option': function(options) {
-      if (options || typeof options === 'object') {
+      if (options && typeof options === 'object') {
         return this.each(function() {
           var $this = $(this),
               data = $this.data('swiper');
@@ -266,7 +266,7 @@
           newIndex = (data.options.numPages + newIndex) % data.options.numPages;
         }
         $leftPage.data('page-index', newIndex);
-        data.options.generatePages.call($leftPage, newIndex);
+        data.options.generatePage.call($leftPage, newIndex);
       }
       if ($rightPage.data('page-index') !== currentPage + 1) {
         newIndex = currentPage + 1;
@@ -274,7 +274,7 @@
           newIndex %= data.options.numPages;
         }
         $rightPage.data('page-index', newIndex);
-        data.options.generatePages.call($rightPage, newIndex);
+        data.options.generatePage.call($rightPage, newIndex);
       }
 
       data.options.onflip.call($this, e);
